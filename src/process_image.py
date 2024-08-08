@@ -9,6 +9,8 @@ import numpy
 import PIL
 import cv2
 
+seed = 0
+torch.manual_seed(seed)
 
 NUM_CLASSES = 6
 DETECTION_STATE_PATH = "../models/detector.pth"
@@ -27,6 +29,7 @@ classification_model = models.mobilenet_v3_small(weights=None)
 num_features = classification_model.classifier[3].in_features
 classification_model.classifier[3] = torch.nn.Linear(num_features, NUM_CLASSES)
 classification_model.load_state_dict(torch.load(CLASSIFIER_STATE_PATH))
+classification_model.eval()
 
 transform = v2.Compose([
     v2.ToDtype(torch.float32, scale=True),
@@ -71,7 +74,7 @@ def predict_image(preprocessed_image):
 
         predicted_class = torch.argmax(output, dim=1)
         predictions.append(predicted_class.item())
-    
+
     return boxes, scores, predictions
 
 def process_predictions(image, boxes, scores, predictions, scoreThreshold):
@@ -79,7 +82,6 @@ def process_predictions(image, boxes, scores, predictions, scoreThreshold):
     imageArray = numpy.array(image)
     imageArray = cv2.resize(imageArray, (512, 512), interpolation=cv2.INTER_LANCZOS4)
     result = imageArray
-    # result = cv2.copyMakeBorder(imageArray, PAD_AMT, PAD_AMT, PAD_AMT, PAD_AMT, cv2.BORDER_CONSTANT, value=PAD_COLOR)
     predicted_total = 0
     for i in range(0, len(boxes)):
 

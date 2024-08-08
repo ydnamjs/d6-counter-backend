@@ -26,7 +26,7 @@ app.add_middleware(
 async def process_frame(image: Annotated[UploadFile, Form()], canny_threshold_1: Annotated[int, Form()], canny_threshold_2: Annotated[int, Form()]):
 
 
-    if image.content_type not in ["image/png"]:
+    if image.content_type not in ["image/jpeg"]:
         raise HTTPException(status_code=400, detail="Invalid file type. Only PNG files are allowed.")
 
     image = Image.open(BytesIO(await image.read()))
