@@ -1,3 +1,4 @@
+from torchvision.transforms import v2
 from torchvision import transforms
 import torchvision.models as models
 import bbox_visualizer as bbv
@@ -27,9 +28,9 @@ num_features = classification_model.classifier[3].in_features
 classification_model.classifier[3] = torch.nn.Linear(num_features, NUM_CLASSES)
 classification_model.load_state_dict(torch.load(CLASSIFIER_STATE_PATH))
 
-transform = transforms.v2.Compose([
-    transforms.v2.ToDtype(torch.float32, scale=True),
-    transforms.v2.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
+transform = v2.Compose([
+    v2.ToDtype(torch.float32, scale=True),
+    v2.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
 ])
 
 tensorify = transforms.Compose([
@@ -56,8 +57,6 @@ def predict_image(preprocessed_image):
     scores = numpy.array(prediction[0]['scores'])
     boxes = numpy.array(prediction[0]['boxes']).astype(numpy.int32)
 
-    result = cv2.imread("cropped_image.jpg")
-    result = cv2.resize(result, (512, 512), interpolation=cv2.INTER_LANCZOS4)
     predictions = []
     for box in boxes:
             
@@ -77,7 +76,10 @@ def predict_image(preprocessed_image):
 
 def process_predictions(image, boxes, scores, predictions, scoreThreshold):
     
-    result = cv2.copyMakeBorder(numpy.array(image), PAD_AMT, PAD_AMT, PAD_AMT, PAD_AMT, cv2.BORDER_CONSTANT, value=PAD_COLOR)
+    imageArray = numpy.array(image)
+    imageArray = cv2.resize(imageArray, (512, 512), interpolation=cv2.INTER_LANCZOS4)
+    result = imageArray
+    # result = cv2.copyMakeBorder(imageArray, PAD_AMT, PAD_AMT, PAD_AMT, PAD_AMT, cv2.BORDER_CONSTANT, value=PAD_COLOR)
     predicted_total = 0
     for i in range(0, len(boxes)):
 
