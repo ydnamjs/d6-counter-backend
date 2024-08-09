@@ -1,6 +1,41 @@
-# AWS Deployment
+# D6 Counter Backend
 
-Create an EC2 ubuntu instance and ssh in
+API made with FastAPI that receives images of six sided dice and runs them through an AI model for detection and classification
+
+# Front End
+Check out the React.js App that this API was made for at: https://ydnamjs.github.io/d6-counter-app/
+
+# Technologies Used
+- Amazon Web Services (AWS)
+- Python
+- FastAPI
+- Nginx
+- PyTorch
+- Torchvision
+- openCV
+- Python Image Library (PIL)
+
+# AWS Deployment On An EC2 Ubuntu Instance
+
+## Setting Up The Instance
+
+In AWS under all services under Computer select EC2
+
+![image](https://github.com/user-attachments/assets/bd6405b1-6156-4d64-9c2e-3d8237a7ade7)
+
+In the EC2 dashboard select "Launch Instance"
+
+![image](https://github.com/user-attachments/assets/c188532d-8738-46e0-833d-f5fa417bc498)
+
+In the "Application and OS Images (Amazon Machine Image)" section select Ubuntu and Ubuntu Server 24.04 LTS
+
+![image](https://github.com/user-attachments/assets/8899baec-c618-48e3-a06a-f7b4e1f666ea)
+
+In "Network Settings" turn on "Allow HTTP traffic from the internet"
+
+![image](https://github.com/user-attachments/assets/096fd678-510d-463f-a9ce-f3fbad13765a)
+
+Launch and connect to the instance
 
 Run
 ```
@@ -12,17 +47,12 @@ Run
 sudo apt-get upgrade
 ```
 
+## NGINX Setup
+
 Run
 ```
 sudo apt install nginx
 ```
-
-Run
-```
-sudo apt install python3.12-venv
-```
-
-## NGINX Setup
 
 Run
 ```
@@ -45,7 +75,12 @@ Restart the nginx service
 sudo service nginx restart
 ```
 
-## APP Setup
+## Deploying The API
+
+Install python virtual environment
+```
+sudo apt install python3.12-venv
+```
 
 Clone the repository
 ```
@@ -82,7 +117,7 @@ Run the app
 ../python-environment/bin/python3 -m uvicorn main:app
 ```
 
-Run the app until killed
+Run the app detached from the console
 ```
 nohup ../python-environment/bin/python3 -m uvicorn main:app &
 ```
