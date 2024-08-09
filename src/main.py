@@ -16,11 +16,15 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+@app.get("/")
+def hello_world():
+    return {"hello": "world"}
 
 @app.post("/post-image/")
 async def process_frame(image: Annotated[UploadFile, Form()], canny_threshold_1: Annotated[int, Form()], canny_threshold_2: Annotated[int, Form()]):
