@@ -2,8 +2,8 @@
 
 API made with FastAPI that receives images of six sided dice and runs them through an AI model for detection and classification
 
-# Front End
-Check out the React.js App that this API was made for at: https://ydnamjs.github.io/d6-counter-app/
+# Live Front End Site
+Check out the React.js App that this API was made for at: https://ydnamjs.github.io/d6-counter-frontend/
 
 # Technologies Used
 - Amazon Web Services (AWS)
