@@ -1,9 +1,14 @@
-# D6 Counter Backend
+# D6 Counter Backend EC2
 
-API made with FastAPI that receives images of six sided dice and runs them through an AI model for detection and classification
+This project is an API made with FastAPI that receives images of six sided dice and runs them through an AI model for detection and classification
+
+It is intended for use in AWS EC2 Compute Instances
 
 # Live Front End Site
+
 Check out the React.js App that this API was made for at: https://ydnamjs.github.io/d6-counter-frontend/
+
+(This site now uses https://github.com/ydnamjs/d6-counter-backend-lambda which is an adaptation of this repository for AWS lambda)
 
 # Technologies Used
 - Amazon Web Services (AWS)
